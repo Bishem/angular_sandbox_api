@@ -63,6 +63,7 @@ public class TaskService {
 	private Task updateWith(@Valid final TaskBean bean) {
 
 		Assert.notNull(bean.getId(), "must have an id");
+		final var task = taskRepository.findById(bean.getId()).orElseThrow();
 		
 		final var mapper = new ModelMapper();
 		mapper.getConfiguration().setSkipNullEnabled(true);
@@ -75,7 +76,6 @@ public class TaskService {
 			}
 		});
 
-		final var task = taskRepository.findById(bean.getId()).orElseThrow();
 		mapper.map(bean, task);
 		return task;
 	}
