@@ -1,61 +1,44 @@
 package fr.diginamic.taskboard.business;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import fr.diginamic.taskboard.persistence.UserRepository;
 import fr.diginamic.taskboard.util.beans.UserBean;
+import fr.diginamic.taskboard.util.generics.GenericService;
 import fr.diginamic.taskboard.util.models.User;
 
 @Service
-public class UserService {
+public class UserService extends GenericService<User, UserBean> {
 
-	@Autowired
-	private UserRepository repository;
+//	/**
+//	 * this field exists solely to prevent casting in redefined methods
+//	 */
+//	private final UserRepository userRepository;
 
-	public UserBean find(final String email) {
-		return beanFrom(repository.findByEmail(email).orElseThrow());
+	protected UserService(final UserRepository repository, final ModelMapper mapper) {
+		super(repository, User.class, UserBean.class, mapper);
+//		userRepository = repository;
 	}
 
-	public List<UserBean> findAll() {
-		return repository.findAll().stream().map(UserService::beanFrom).toList();
-	}
-
-	public UserBean create(@Valid final UserBean bean) {
-		return beanFrom(repository.save(modelFrom(bean)));
-	}
-
-	public UserBean update(@Valid final UserBean bean) {
-		return beanFrom(repository.save(updateWith(bean)));
-	}
-
-	public Boolean delete(final String email) {
-		repository.delete(repository.findByEmail(email).orElseThrow());
-		return true;
-	}
-
-	private static UserBean beanFrom(@Valid final User user) {
-		final var mapper = new ModelMapper();
-		return mapper.map(user, UserBean.class);
-	}
-
-	private static User modelFrom(@Valid final UserBean bean) {
-		Assert.notNull(bean.getPassword(), "user must provide password upon creation");
-		final var mapper = new ModelMapper();
-		return mapper.map(bean, User.class);
-	}
-
-	private User updateWith(@Valid final UserBean bean) {
-		final var user = repository.findByEmail(bean.getEmail()).orElseThrow();
-		final var mapper = new ModelMapper();
-		mapper.getConfiguration().setSkipNullEnabled(true);
-		mapper.map(bean, user);
-		return user;
-	}
+//	public UserBean findEmail(final String email) {
+//		return beanFrom(userRepository.findByEmail(email).orElseThrow());
+//	}
+//
+//	@Override
+//	public UserBean create(@Valid final UserBean bean) {
+//		Assert.notNull(bean.getPassword(), "user must provide password upon creation");
+//		return beanFrom(userRepository.save(modelFrom(bean)));
+//	}
+//
+//	@Override
+//	public UserBean update(@Valid final UserBean bean) {
+//		final var user = userRepository.findByEmail(bean.getEmail()).orElseThrow();
+//		return beanFrom(userRepository.save(updateWith(bean, user)));
+//	}
+//
+//	public Boolean deleteEmail(final String email) {
+//		repository.delete(userRepository.findByEmail(email).orElseThrow());
+//		return true;
+//	}
 }
