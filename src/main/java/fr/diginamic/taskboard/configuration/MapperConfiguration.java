@@ -8,7 +8,13 @@ import org.springframework.context.annotation.Configuration;
 public class MapperConfiguration {
 
 	@Bean
-	public ModelMapper mapper() {
-		return new ModelMapper();
+	ModelMapper mapper() {
+
+		final var mapper = new ModelMapper();
+
+		mapper.getConfiguration().setSkipNullEnabled(true);
+
+		return mapper;
 	}
+
 }
