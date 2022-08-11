@@ -7,25 +7,21 @@ import java.util.Collection;
 
 import javax.validation.Valid;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.util.Assert;
 
 import lombok.SneakyThrows;
 
-public abstract class GenericService<M> {
+public class GenericService<M> {
 
 	protected final GenericRepository<M> repository;
 	protected final Class<M> clazz;
-	protected final ModelMapper mapper;
 
 	protected GenericService(
 			final GenericRepository<M> repository,
-			final Class<M> modelClass,
-			final ModelMapper mapper) {
+			final Class<M> modelClass) {
 
 		this.repository = repository;
 		this.clazz = modelClass;
-		this.mapper = mapper;
 	}
 
 	public M find(@Valid final M model) {
