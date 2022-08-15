@@ -7,14 +7,21 @@ import java.util.Collection;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.util.Assert;
 
 import lombok.SneakyThrows;
 
 public class GenericService<M> {
 
-	protected final GenericRepository<M> repository;
-	protected final Class<M> clazz;
+	protected GenericRepository<M> repository;
+	protected Class<M> clazz;
+
+	@Autowired
+	protected ModelMapper mapper;
 
 	protected GenericService(
 			final GenericRepository<M> repository,
@@ -32,25 +39,39 @@ public class GenericService<M> {
 		return repository.findAll();
 	}
 
+	public Collection<M> findAll(@Valid final M model) {
+		return repository.findAll(Example.of(model));
+	}
+
 	public M create(@Valid final M model) {
-		Assert.isNull(getId(model), ID_IS_NULL.message());
+		Assert.isNull(getId(model), ID_NOT_NULL.message());
 		return repository.save(model);
 	}
 
 	public M update(@Valid final M model) {
-		final var id = getId(model);
-		Assert.notNull(id, ID_NOT_NULL.message());
-		return repository.save(repository.findById(id).orElseThrow());
+		Assert.notNull(getId(model), ID_IS_NULL.message());
+		return repository.save(merge(model, find(model)));
 	}
 
 	public Boolean delete(@Valid final M model) {
-		final var found = repository.findById(getId(model));
-		repository.delete(found.orElseThrow());
-		return found.isPresent();
+		repository.delete(find(model));
+		return true;
+	}
+
+	protected M merge(@Valid final M model, @Valid final M found) {
+
+		mapper.getConfiguration()
+				.setMatchingStrategy(MatchingStrategies.STRICT)
+				.setCollectionsMergeEnabled(false)
+				.setSkipNullEnabled(true);
+
+		mapper.map(model, found);
+
+		return found;
 	}
 
 	@SneakyThrows
-	private Integer getId(@Valid final M model) {
+	protected Integer getId(@Valid final M model) {
 		return (Integer) clazz.getDeclaredMethod("getId").invoke(model);
 	}
 }

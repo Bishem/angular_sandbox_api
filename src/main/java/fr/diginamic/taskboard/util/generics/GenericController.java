@@ -14,20 +14,25 @@ import reactor.core.publisher.Mono;
 
 public class GenericController<M> {
 
-	protected final GenericService<M> service;
+	protected GenericService<M> service;
 
 	protected GenericController(final GenericService<M> service) {
 		this.service = service;
 	}
 
-	@GetMapping("/all")
-	public Mono<Collection<M>> fetchAll() {
-		return Mono.just(service.findAll());
-	}
-
 	@GetMapping("/one")
 	public Mono<M> fetch(@RequestBody @Valid final M model) {
 		return Mono.just(service.find(model));
+	}
+
+	@PostMapping("/match")
+	public Mono<Collection<M>> fetchMatching(@RequestBody @Valid final M model) {
+		return Mono.just(service.findAll(model));
+	}
+
+	@GetMapping
+	public Mono<Collection<M>> fetchAll() {
+		return Mono.just(service.findAll());
 	}
 
 	@PostMapping

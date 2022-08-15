@@ -2,12 +2,12 @@ package fr.diginamic.taskboard.util.models;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,17 +25,15 @@ public class Task {
 	@GeneratedValue(strategy = IDENTITY)
 	private Integer id;
 
-	@NotNull
+	@Column(nullable = false)
 	private String title;
 	private String description;
 
 	@Valid
-	@NotNull
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Status status;
 
 	@Valid
-	@NotNull
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private User user;
 }

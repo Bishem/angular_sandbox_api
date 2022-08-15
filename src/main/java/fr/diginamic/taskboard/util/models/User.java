@@ -10,23 +10,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @Entity
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
 
 	@Id
+	@JsonIgnore
 	@GeneratedValue(strategy = IDENTITY)
 	private Integer id;
 
@@ -34,10 +39,18 @@ public class User {
 	@Column(unique = true, nullable = false)
 	private String email;
 
-	@NotNull
+	@JsonIgnore
+	@Column(nullable = false)
 	private String password;
 
 	@Valid
 	@ManyToMany(fetch = EAGER)
 	private Collection<Role> roles;
+
+	@Valid
+	@JsonIgnore
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
+	@OneToMany(mappedBy = "user")
+	private Collection<Task> tasks;
 }
