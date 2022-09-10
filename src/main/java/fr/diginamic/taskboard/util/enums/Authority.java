@@ -5,16 +5,16 @@ import lombok.ToString;
 @ToString
 public enum Authority {
 
-	ADMIN("ADMIN"),
-	USER("USER");
+  ADMIN("ADMIN"),
+  USER("USER");
 
-	private String level;
+  private String level;
 
-	Authority(final String level) {
-		this.level = level;
-	}
+  Authority(final String level) {
+    this.level = level;
+  }
 
-	public String level() {
-		return level;
-	}
+  public String level() {
+    return level;
+  }
 }

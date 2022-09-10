@@ -19,23 +19,23 @@ import reactor.core.publisher.Mono;
 @CrossOrigin("http://localhost:4200")
 public class AuthController {
 
-	@GetMapping("/me")
-	public Mono<UserSecret> validate() {
-		log.info("i was here ^^");
-		return Mono.just(
-				UserSecret.builder()
-						.email("admin@test.com")
-						.token("token")
-						.roles(Arrays.asList(
-								Role.builder()
-										.id(1)
-										.authority(Authority.ADMIN)
-										.build(),
-								Role.builder()
-										.id(2)
-										.authority(Authority.USER)
-										.build()))
-						.build());
-	}
+  @GetMapping("/me")
+  public Mono<UserSecret> validate() {
+    log.info("i was here ^^");
+    return Mono.just(
+      UserSecret.builder()
+        .email("admin@test.com")
+        .token("token")
+        .roles(Arrays.asList(
+          Role.builder()
+            .id(1)
+            .authority(Authority.ADMIN)
+            .build(),
+          Role.builder()
+            .id(2)
+            .authority(Authority.USER)
+            .build()))
+        .build());
+  }
 
 }

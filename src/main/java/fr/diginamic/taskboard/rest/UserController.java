@@ -13,7 +13,7 @@ import fr.diginamic.taskboard.util.models.User;
 @CrossOrigin("http://localhost:4200")
 public class UserController extends GenericController<User> {
 
-	protected UserController(final UserService service) {
-		super(service);
-	}
+  protected UserController(final UserService service) {
+    super(service);
+  }
 }

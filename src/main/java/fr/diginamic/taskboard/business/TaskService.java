@@ -9,7 +9,7 @@ import fr.diginamic.taskboard.util.models.Task;
 @Service
 public class TaskService extends GenericService<Task> {
 
-	protected TaskService(final TaskRepository repository) {
-		super(repository, Task.class);
-	}
+  protected TaskService(final TaskRepository repository) {
+    super(repository, Task.class);
+  }
 }

@@ -13,7 +13,7 @@ import fr.diginamic.taskboard.util.models.Status;
 @CrossOrigin("http://localhost:4200")
 public class StatusConrtoller extends GenericController<Status> {
 
-	protected StatusConrtoller(final StatusService service) {
-		super(service);
-	}
+  protected StatusConrtoller(final StatusService service) {
+    super(service);
+  }
 }

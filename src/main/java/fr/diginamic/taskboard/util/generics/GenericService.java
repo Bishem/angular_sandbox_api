@@ -17,61 +17,61 @@ import lombok.SneakyThrows;
 
 public class GenericService<M> {
 
-	protected GenericRepository<M> repository;
-	protected Class<M> clazz;
+  protected GenericRepository<M> repository;
+  protected Class<M> clazz;
 
-	@Autowired
-	protected ModelMapper mapper;
+  @Autowired
+  protected ModelMapper mapper;
 
-	protected GenericService(
-			final GenericRepository<M> repository,
-			final Class<M> modelClass) {
+  protected GenericService(
+    final GenericRepository<M> repository,
+    final Class<M> modelClass) {
 
-		this.repository = repository;
-		this.clazz = modelClass;
-	}
+    this.repository = repository;
+    this.clazz = modelClass;
+  }
 
-	public M find(@Valid final M model) {
-		return repository.findById(getId(model)).orElseThrow();
-	}
+  public M find(@Valid final M model) {
+    return repository.findById(getId(model)).orElseThrow();
+  }
 
-	public Collection<M> findAll() {
-		return repository.findAll();
-	}
+  public Collection<M> findAll() {
+    return repository.findAll();
+  }
 
-	public Collection<M> findAll(@Valid final M model) {
-		return repository.findAll(Example.of(model));
-	}
+  public Collection<M> findAll(@Valid final M model) {
+    return repository.findAll(Example.of(model));
+  }
 
-	public M create(@Valid final M model) {
-		Assert.isNull(getId(model), ID_NOT_NULL.message());
-		return repository.save(model);
-	}
+  public M create(@Valid final M model) {
+    Assert.isNull(getId(model), ID_NOT_NULL.message());
+    return repository.save(model);
+  }
 
-	public M update(@Valid final M model) {
-		Assert.notNull(getId(model), ID_IS_NULL.message());
-		return repository.save(merge(model, find(model)));
-	}
+  public M update(@Valid final M model) {
+    Assert.notNull(getId(model), ID_IS_NULL.message());
+    return repository.save(merge(model, find(model)));
+  }
 
-	public Boolean delete(@Valid final M model) {
-		repository.delete(find(model));
-		return true;
-	}
+  public Boolean delete(@Valid final M model) {
+    repository.delete(find(model));
+    return true;
+  }
 
-	protected M merge(@Valid final M model, @Valid final M found) {
+  protected M merge(@Valid final M model, @Valid final M found) {
 
-		mapper.getConfiguration()
-				.setMatchingStrategy(MatchingStrategies.STRICT)
-				.setCollectionsMergeEnabled(false)
-				.setSkipNullEnabled(true);
+    mapper.getConfiguration()
+      .setMatchingStrategy(MatchingStrategies.STRICT)
+      .setCollectionsMergeEnabled(false)
+      .setSkipNullEnabled(true);
 
-		mapper.map(model, found);
+    mapper.map(model, found);
 
-		return found;
-	}
+    return found;
+  }
 
-	@SneakyThrows
-	protected Integer getId(@Valid final M model) {
-		return (Integer) clazz.getDeclaredMethod("getId").invoke(model);
-	}
+  @SneakyThrows
+  protected Integer getId(@Valid final M model) {
+    return (Integer) clazz.getDeclaredMethod("getId").invoke(model);
+  }
 }

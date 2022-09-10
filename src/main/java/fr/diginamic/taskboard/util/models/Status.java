@@ -30,18 +30,18 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Status {
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	private Integer id;
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
+  private Integer id;
 
-	@Enumerated(STRING)
-	@Column(unique = true, nullable = false)
-	private State state;
+  @Enumerated(STRING)
+  @Column(unique = true, nullable = false)
+  private State state;
 
-	@Valid
-	@JsonIgnore
-	@ToString.Exclude
-	@EqualsAndHashCode.Exclude
-	@OneToMany(mappedBy = "status")
-	private Collection<Task> tasks;
+  @Valid
+  @JsonIgnore
+  @ToString.Exclude
+  @EqualsAndHashCode.Exclude
+  @OneToMany(mappedBy = "status")
+  private Collection<Task> tasks;
 }

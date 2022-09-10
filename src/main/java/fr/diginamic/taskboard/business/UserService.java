@@ -9,7 +9,7 @@ import fr.diginamic.taskboard.util.models.User;
 @Service
 public class UserService extends GenericService<User> {
 
-	protected UserService(final UserRepository repository) {
-		super(repository, User.class);
-	}
+  protected UserService(final UserRepository repository) {
+    super(repository, User.class);
+  }
 }

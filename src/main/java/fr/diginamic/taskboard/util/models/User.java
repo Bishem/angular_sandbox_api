@@ -30,27 +30,27 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class User {
 
-	@Id
-	@JsonIgnore
-	@GeneratedValue(strategy = IDENTITY)
-	private Integer id;
+  @Id
+  @JsonIgnore
+  @GeneratedValue(strategy = IDENTITY)
+  private Integer id;
 
-	@Email
-	@Column(unique = true, nullable = false)
-	private String email;
+  @Email
+  @Column(unique = true, nullable = false)
+  private String email;
 
-	@JsonIgnore
-	@Column(nullable = false)
-	private String password;
+  @JsonIgnore
+  @Column(nullable = false)
+  private String password;
 
-	@Valid
-	@ManyToMany(fetch = EAGER)
-	private Collection<Role> roles;
+  @Valid
+  @ManyToMany(fetch = EAGER)
+  private Collection<Role> roles;
 
-	@Valid
-	@JsonIgnore
-	@ToString.Exclude
-	@EqualsAndHashCode.Exclude
-	@OneToMany(mappedBy = "user")
-	private Collection<Task> tasks;
+  @Valid
+  @JsonIgnore
+  @ToString.Exclude
+  @EqualsAndHashCode.Exclude
+  @OneToMany(mappedBy = "user")
+  private Collection<Task> tasks;
 }

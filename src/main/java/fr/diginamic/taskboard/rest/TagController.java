@@ -4,16 +4,17 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.diginamic.taskboard.business.RoleService;
 import fr.diginamic.taskboard.util.generics.GenericController;
-import fr.diginamic.taskboard.util.models.Role;
+import fr.diginamic.taskboard.util.generics.GenericService;
+import fr.diginamic.taskboard.util.models.Tag;
 
 @RestController
-@RequestMapping("/api/role")
+@RequestMapping("/api/tag")
 @CrossOrigin("http://localhost:4200")
-public class RoleController extends GenericController<Role> {
+public class TagController extends GenericController<Tag> {
 
-  protected RoleController(final RoleService service) {
+  protected TagController(final GenericService<Tag> service) {
     super(service);
   }
+
 }

@@ -10,5 +10,5 @@ import fr.diginamic.taskboard.util.models.User;
 @Repository
 public interface UserRepository extends GenericRepository<User> {
 
-	Optional<User> findByEmail(String email);
+  Optional<User> findByEmail(String email);
 }

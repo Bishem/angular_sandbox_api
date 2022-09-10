@@ -9,7 +9,7 @@ import fr.diginamic.taskboard.util.models.Status;
 @Service
 public class StatusService extends GenericService<Status> {
 
-	protected StatusService(final StatusRepository repository) {
-		super(repository, Status.class);
-	}
+  protected StatusService(final StatusRepository repository) {
+    super(repository, Status.class);
+  }
 }

@@ -9,7 +9,7 @@ import fr.diginamic.taskboard.util.models.Role;
 @Service
 public class RoleService extends GenericService<Role> {
 
-	protected RoleService(final RoleRepository repository) {
-		super(repository, Role.class);
-	}
+  protected RoleService(final RoleRepository repository) {
+    super(repository, Role.class);
+  }
 }

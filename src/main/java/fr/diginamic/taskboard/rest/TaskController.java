@@ -13,7 +13,7 @@ import fr.diginamic.taskboard.util.models.Task;
 @CrossOrigin("http://localhost:4200")
 public class TaskController extends GenericController<Task> {
 
-	protected TaskController(final TaskService service) {
-		super(service);
-	}
+  protected TaskController(final TaskService service) {
+    super(service);
+  }
 }
